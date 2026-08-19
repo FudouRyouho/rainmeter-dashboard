@@ -1,0 +1,10 @@
+docs-agent/
+docs-archive/
+.archive/
+docs-temp/
+.trae/
+docs/
+.log
+.patch
+HWiNFOIndexList.txt
+debug.txt

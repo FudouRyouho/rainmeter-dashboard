@@ -1,0 +1,714 @@
+:root {
+  /* Colores base */
+  --fg: #e0e0e0;
+  --muted: #8a8a8a;
+
+  /* Paleta DISK (tokens base y variantes por dispositivo) */
+  --disk-usage: #78bf7a; /* base: uso */
+  --disk-latency: #bfa278; /* base: latencia */
+  --disk-read: #79a6a6; /* base: lectura */
+  --disk-write: #7f89b3; /* base: escritura */
+
+/* Variantes explícitas por DISK (paleta estricta, sin ambigüedad) */
+  --disk-usage-disk0: var(--disk-usage);
+  --disk-latency-disk0: var(--disk-latency);
+  --disk-read-disk0: var(--disk-read);
+  --disk-write-disk0: var(--disk-write);
+
+  /* DISK1 con sutil variación para distinguir sin romper la temática */
+  --disk-usage-disk1: #6fcf9b;
+  --disk-latency-disk1: #c6aa80;
+  --disk-read-disk1: #6fb4b4;
+  --disk-write-disk1: #7ba0c8;
+
+  /* Paleta CPU (tokens base; sobreescritos por PaletteManager) */
+  --cpu-usage: #78a5bf;
+  --cpu-clock: #bfa278;
+  --cpu-temp: #bf7878;
+
+  /* Paleta RAM */
+  --ram-phys: #7fa8c2;
+  --ram-virt: #c6b084;
+  --ram-cache: #79a6a6;
+  --ram-swap: #a785cf;
+
+  /* Paleta GPU */
+  --gpu-usage: #7fa8c2;
+  --gpu-clock: #c6b084;
+  --gpu-temp: #c88484;
+  --gpu-vram: #79a6a6;
+  --gpu-sram: #7f89b3;
+  --gpu-vcore: #bfa278;
+  --gpu-fan: #79a6a6;
+  --gpu-vramclock: #7f89b3;
+
+  /* Paleta NET */
+  --net-up: #79a6a6;
+  --net-down: #7f89b3;
+
+  /* Tipografías */
+  --text-base: 11px; /* compacto para 1360x768 */
+  --text-compact: 10px; /* antes --text-xs */
+
+  /* Espaciados compactos */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+
+  --dashboard-w: 675px;
+  --dashboard-h: 720px;
+  --left-w: 292px; /* fijo: no se modifica */
+}
+
+html,
+body {
+  width: var(--dashboard-w);
+  margin: 0;
+  background: #1e1e1e;
+  color: var(--fg);
+  font-family: "Segoe UI", system-ui, -apple-system;
+  font-size: var(--text-base);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.title {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--muted);
+}
+.value {
+  font-size: 16px; /* métrica principal compacta */
+  font-weight: 600;
+  font-variant-numeric: tabular-nums; /* evita saltos al cambiar números */
+}
+
+/* ============================
+   Tiles estilo Task Manager
+   ============================ */
+.tile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-4);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.tile-graph {
+  width: 100px;
+  height: 56px; /* gráfico más compacto */
+  display: flex;
+  align-items: center;
+  flex: 0 0 56px; /* tamaño fijo similar al actual */
+}
+.tile-graph svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.tile-graph .frame {
+  fill: rgba(255, 255, 255, 0.05);
+  stroke: rgba(255, 255, 255, 0.18);
+}
+.tile-graph .curve {
+  fill: none;
+  stroke: var(--accent, #55b2ff);
+  stroke-width: var(--curve-width, 1.5);
+  stroke-opacity: var(--curve-opacity, 0.92);
+}
+/* series-* eliminadas del HTML activo (uso, clock, temp, up, down) */
+.tile-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.tile-title {
+  font-size: 12px;
+  color: #fff;
+  margin-bottom: var(--space-2);
+}
+.tile-title.clickable {
+  cursor: pointer;
+  transition: color 120ms ease-out;
+}
+.tile-title.clickable:hover {
+  color: var(--accent, #55b2ff);
+}
+/* Reservar el espacio de la barra inferior para evitar salto al activar */
+.tile-title.clickable::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-top: 1px;
+  border-radius: 1px;
+  opacity: 0;
+  transition: opacity 120ms ease-out, background-color 120ms ease-out;
+}
+.tile-title.active {
+  color: var(--accent, #55b2ff);
+}
+.tile-title.active::after {
+  opacity: 1;
+  background: var(--accent, #55b2ff);
+}
+.tile-sub {
+  font-size: 11px;
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+/* jdocs: Eliminado: clases de layout `series-grid/header/values`.
+   Motivo: Se usa utilidades headless (`grid`, `auto-rows-min`, `gap-*`, `align-baseline`, `text-base`, `tabular-nums`).
+   Alcance: `_archive/*` queda fuera del proyecto activo; si se reactivara, migrar a utilidades. */
+.legend {
+  color: var(--series-color, var(--fg));
+  font-weight: 600;
+}
+.muted {
+  color: var(--muted);
+}
+
+.tile-cpu {
+  --accent: #55b2ff;
+  /* Colores por serie (CPU) */
+  --series-usage: var(--cpu-usage);
+  --series-clock: var(--cpu-clock);
+  --series-temp: var(--cpu-temp);
+}
+.tile-mem {
+  --accent: #4c78ff;
+  /* Colores por serie (RAM) */
+  --series-phys: var(--ram-phys);
+  --series-virt: var(--ram-virt);
+  --series-cache: var(--ram-cache);
+  --series-swap: var(--ram-swap);
+}
+.tile-disk {
+  --accent: #7bd96f;
+  /* Colores por serie (DISK) via tokens de paleta */
+  --series-usage: var(--disk-usage);
+  --series-latency: var(--disk-latency);
+  --series-read: var(--disk-read);
+  --series-write: var(--disk-write);
+}
+.tile-net {
+  --accent: #ff4fa8;
+  /* Colores por serie (Ethernet) */
+  --series-up: var(--net-up);
+  --series-down: var(--net-down);
+}
+
+/* =====================================
+   Headless: mapeo por atributo [data-series]
+   - Asigna --series-color según la serie
+   - Permite reutilizar en leyendas (.legend) y curvas (path[data-series])
+   ===================================== */
+[data-series="cpu-usage"] {
+  --series-color: var(--cpu-usage, var(--series-usage));
+} /* Transición: token CPU con fallback legacy */
+[data-series="cpu-clock"] {
+  --series-color: var(--cpu-clock, var(--series-clock));
+}
+[data-series="cpu-temp"] {
+  --series-color: var(--cpu-temp, var(--series-temp));
+}
+[data-series="mem-phys"] {
+  --series-color: var(--ram-phys, var(--series-phys));
+}
+[data-series="mem-virt"] {
+  --series-color: var(--ram-virt, var(--series-virt));
+}
+[data-series="mem-cache"] {
+  --series-color: var(--ram-cache, var(--series-cache));
+}
+[data-series="mem-swap"] {
+  --series-color: var(--ram-swap, var(--series-swap));
+}
+/* GPU declarativo con fallbacks a variables legacy */
+[data-series="gpu-usage"] {
+  --series-color: var(--gpu-usage, var(--series-usage));
+}
+[data-series="gpu-clock"] {
+  --series-color: var(--gpu-clock, var(--series-clock));
+}
+[data-series="gpu-temp"] {
+  --series-color: var(--gpu-temp, var(--series-temp));
+}
+[data-series="gpu-vcore"] {
+  --series-color: var(--gpu-vcore, var(--series-vcore));
+}
+[data-series="gpu-vram"] {
+  --series-color: var(--gpu-vram, var(--series-vram));
+}
+[data-series="gpu-sram"] {
+  --series-color: var(--gpu-sram, var(--series-sram));
+}
+[data-series="gpu-vram-shared"] {
+  --series-color: var(--gpu-sram, var(--series-sram));
+}
+[data-series="gpu-fan-rpm"] {
+  --series-color: var(--gpu-fan-rpm, var(--series-fan));
+}
+[data-series="gpu-vram-clock"] {
+  --series-color: var(--gpu-vram-clock, var(--series-vramclock));
+}
+/* DISK declarativo con fallbacks */
+[data-series="disk-usage"] {
+  --series-color: var(--disk-usage, var(--series-usage));
+}
+[data-series="disk-latency"] {
+  --series-color: var(--disk-latency, var(--series-latency));
+}
+[data-series="disk-read"] {
+  --series-color: var(--disk-read, var(--series-read));
+}
+[data-series="disk-write"] {
+  --series-color: var(--disk-write, var(--series-write));
+}
+/* NET declarativo con fallbacks */
+[data-series="net-up"] {
+  --series-color: var(--net-up, var(--series-up));
+}
+[data-series="net-down"] {
+  --series-color: var(--net-down, var(--series-down));
+}
+[data-series="net-ping"] {
+  --series-color: var(--net-ping, var(--muted));
+}
+.tile-gpu {
+  --accent: #c47cff;
+  /* Colores por serie (GPU) */
+  --series-usage: var(--gpu-usage);
+  --series-clock: var(--gpu-clock);
+  --series-temp: var(--gpu-temp);
+  --series-vram: var(--gpu-vram);
+  --series-sram: var(--gpu-sram);
+  --series-vcore: var(--gpu-vcore);
+  --series-fan: var(--gpu-fan);
+  --series-vramclock: var(--gpu-vramclock);
+}
+
+/* ============================
+   Scoping por dispositivo (DISK0/DISK1)
+   - Reasigna variables de serie usando tokens de paleta
+   - Aplica tanto a tiles como a panel derecho y resumen
+   ============================ */
+.disk0 {
+  --series-usage: var(--disk-usage-disk0);
+  --series-latency: var(--disk-latency-disk0);
+  --series-read: var(--disk-read-disk0);
+  --series-write: var(--disk-write-disk0);
+}
+.disk1 {
+  --series-usage: var(--disk-usage-disk1);
+  --series-latency: var(--disk-latency-disk1);
+  --series-read: var(--disk-read-disk1);
+  --series-write: var(--disk-write-disk1);
+}
+
+/* Scoping del panel derecho por data-panel */
+.right-panel[data-panel="cpu"] {
+  --series-usage: var(--cpu-usage);
+  --series-clock: var(--cpu-clock);
+  --series-temp: var(--cpu-temp);
+}
+
+
+/* ============================
+   Estados de alerta (CSS)
+   - Se aplican a .tile para cambiar el acento del gráfico
+   ============================ */
+.tile.state-warn {
+  --accent: #ffb74d; /* naranja suave */
+}
+.tile.state-crit {
+  --accent: #ff5252; /* rojo crítico */
+}
+
+/* ============================
+   Colores de texto por estado
+   - Se aplican por ítem (span con data-state)
+   ============================ */
+:root {
+  --text-normal: var(--fg);
+  --text-alerta: #ffb74d; /* naranja suave */
+  --text-peligro: #ff5252; /* rojo crítico */
+}
+.text-normal {
+  color: var(--text-normal);
+}
+.text-alerta {
+  color: var(--text-alerta);
+}
+.text-peligro {
+  color: var(--text-peligro);
+}
+
+/* ============================
+   Utilidades de layout
+   ============================ */
+.stack-v-2 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1 1 auto;
+}
+.stack-h-4 {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-4);
+  align-items: baseline;
+}
+.justify-between {
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Utilidad para evitar saltos de línea en lecturas compactas */
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ============================
+   Listas Top Process (sin gráfica)
+   ============================ */
+.top-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: left;
+  text-wrap: nowrap;
+  font-size: 10px;
+}
+.top-row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+}
+.top-name {
+  color: var(--muted);
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.top-metric {
+  font-variant-numeric: tabular-nums;
+  color: var(--metric-color, var(--fg));
+}
+.tile-top-cpu {
+  --metric-color: var(--series-usage);
+}
+.tile-top-ram {
+  --metric-color: var(--series-cache);
+}
+.tile-top-disk {
+  --metric-color: var(--series-read);
+}
+
+/* ============================
+   Combinado TOP (tabla 2x2)
+   ============================ */
+.top-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(0, 1fr);
+  gap: var(--space-4);
+  width: 100%;
+  height: 100%;
+}
+.top-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.top-section .tile-title {
+  margin: 0;
+}
+
+.tile-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1 auto auto;
+  min-width: 0;
+  width: auto;
+}
+
+/* series-* específicas eliminadas del HTML activo; el relleno se gestiona vía [data-series] */
+
+/* Curvas headless: color por [data-series] reutilizando --series-color
+   (ancho unificado a 1.5; opacidades se controlan por clase/serie si aplica) */
+.tile-graph path[data-series],
+.panel-graph path[data-series] {
+  fill: none;
+  stroke: var(--series-color);
+  stroke-width: var(--curve-width, 1.5);
+  stroke-opacity: var(--curve-opacity, 0.92);
+}
+
+/* ============================
+   Combinado: layout y hover
+   ============================ */
+.dashboard {
+  /* Tamaño del skin (Rainmeter) y columnas calculadas */
+  width: var(--dashboard-w);
+  height: var(--dashboard-h);
+  display: grid;
+  grid-template-columns: var(--left-w) calc(var(--dashboard-w) - var(--left-w));
+  align-items: start;
+}
+.dashboard-left {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard-body {
+  max-width: calc(var(--dashboard-w) - var(--left-w));
+  min-height: 100%;
+}
+.tile-graph {
+  position: relative;
+}
+.graph-tooltip {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0.92;
+}
+.tile-graph.dimmed path[data-series]:not(.graph-highlight),
+.tile-graph.dimmed path[class^="series-top-"]:not(.graph-highlight) {
+  stroke-opacity: var(--dim-opacity, 0.25);
+}
+.tile-graph path {
+  transition: stroke-opacity 120ms ease-out;
+}
+
+/* Paleta y estilos para gráficas TOP (5 series) */
+:root {
+  --top1: #55b2ff;
+  --top2: #c47cff;
+  --top3: #7bd96f;
+  --top4: #79a6a6;
+  --top5: #7f89b3;
+  /* Curvas: ancho y opacidad standard */
+  --curve-width: 1.5;
+  --curve-opacity: 0.92;
+}
+.tile-graph path[class^="series-top-"] {
+  fill: none;
+  stroke-width: var(--curve-width);
+  stroke-opacity: var(--curve-opacity);
+}
+.tile-graph .series-top-1 {
+  stroke: var(--top1);
+}
+.tile-graph .series-top-2 {
+  stroke: var(--top2);
+}
+.tile-graph .series-top-3 {
+  stroke: var(--top3);
+}
+.tile-graph .series-top-4 {
+  stroke: var(--top4);
+}
+.tile-graph .series-top-5 {
+  stroke: var(--top5);
+}
+
+/* Colorear los nombres por fila en TOP (consistente en 3 columnas) */
+.tile-top-cpu .top-row:nth-child(1) .top-name,
+.tile-top-ram .top-row:nth-child(1) .top-name,
+.tile-top-disk .top-row:nth-child(1) .top-name {
+  color: var(--top1);
+}
+.tile-top-cpu .top-row:nth-child(1) .top-metric,
+.tile-top-ram .top-row:nth-child(1) .top-metric,
+.tile-top-disk .top-row:nth-child(1) .top-metric {
+  color: var(--top1);
+}
+.tile-top-cpu .top-row:nth-child(2) .top-name,
+.tile-top-ram .top-row:nth-child(2) .top-name,
+.tile-top-disk .top-row:nth-child(2) .top-name {
+  color: var(--top2);
+}
+.tile-top-cpu .top-row:nth-child(2) .top-metric,
+.tile-top-ram .top-row:nth-child(2) .top-metric,
+.tile-top-disk .top-row:nth-child(2) .top-metric {
+  color: var(--top2);
+}
+.tile-top-cpu .top-row:nth-child(3) .top-name,
+.tile-top-ram .top-row:nth-child(3) .top-name,
+.tile-top-disk .top-row:nth-child(3) .top-name {
+  color: var(--top3);
+}
+.tile-top-cpu .top-row:nth-child(3) .top-metric,
+.tile-top-ram .top-row:nth-child(3) .top-metric,
+.tile-top-disk .top-row:nth-child(3) .top-metric {
+  color: var(--top3);
+}
+.tile-top-cpu .top-row:nth-child(4) .top-name,
+.tile-top-ram .top-row:nth-child(4) .top-name,
+.tile-top-disk .top-row:nth-child(4) .top-name {
+  color: var(--top4);
+}
+.tile-top-cpu .top-row:nth-child(4) .top-metric,
+.tile-top-ram .top-row:nth-child(4) .top-metric,
+.tile-top-disk .top-row:nth-child(4) .top-metric {
+  color: var(--top4);
+}
+.tile-top-cpu .top-row:nth-child(5) .top-name,
+.tile-top-ram .top-row:nth-child(5) .top-name,
+.tile-top-disk .top-row:nth-child(5) .top-name {
+  color: var(--top5);
+}
+.tile-top-cpu .top-row:nth-child(5) .top-metric,
+.tile-top-ram .top-row:nth-child(5) .top-metric,
+.tile-top-disk .top-row:nth-child(5) .top-metric {
+  color: var(--top5);
+}
+
+.top-graphs {
+  display: none !important;
+}
+.top-graphs > div {
+  flex: 1;
+  min-width: 0;
+}
+.tile-cpu,
+.tile-mem,
+.tile-disk {
+  align-self: start;
+  justify-self: start;
+}
+/* En estado dimmed, mantener resaltada la serie activa */
+.tile-graph.dimmed .graph-highlight {
+  stroke-opacity: var(--highlight-opacity, 0.95);
+}
+
+/* ============================
+   Panel derecho: gráficas grandes
+   ============================ */
+.panel-graph {
+  width: 100%;
+  height: 100%;
+}
+.panel-graph svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* heredar estilos de tile para el panel derecho */
+.panel-graph .frame {
+  fill: rgba(255, 255, 255, 0.05);
+  stroke: rgba(255, 255, 255, 0.18);
+}
+/* rejilla horizontal componetizada */
+/* Gridline única (tiles y panel derecho) */
+.gridline {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+}
+
+/* Utilidades de grid estilo Tailwind-like */
+.grid {
+  display: grid;
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.align-baseline {
+  align-items: baseline;
+}
+.text-compact {
+  font-size: var(--text-compact);
+}
+.text-base {
+  font-size: var(--text-base);
+}
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+.col-gap-4 {
+  column-gap: var(--space-4);
+}
+/* jdocs: Espaciado y rows utilitarios */
+.auto-rows-min {
+  grid-auto-rows: min-content;
+}
+.auto-rows-fr {
+  grid-auto-rows: 1fr;
+}
+.gap-2 {
+  gap: var(--space-2, 6px);
+}
+/* (limpieza) Comentario duplicado de nowrap eliminado: ya definido arriba */
+
+/* jdocs: Utilidades de tamaño estilo Tailwind-like */
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+
+/* (limpieza) Regla duplicada .tile-graph svg eliminada: ya definida con width/height arriba */
+
+/* jdocs: Eliminadas clases dedicadas `gpu-right-grid` y `disk-right-grid`.
+   Motivo: Se unifica en utilidades headless `grid grid-cols-2 auto-rows-fr gap-2`.
+   Impacto: Menor acoplamiento; el layout se controla desde HTML con utilidades. */
+
+/* Bloque resumen neutral (GPU/DISK/RAM) */
+/* jdocs: Nueva clase neutral `panel-summary` para estandarizar padding/width.
+   Uso: combinar con `stack-v-2` y utilidades de grid/typography.
+   Valores estándar: width 100%, padding 6px 2px 20px. */
+.panel-summary {
+  width: 100%;
+  padding: 6px 2px 20px;
+  box-sizing: border-box;
+}
+
+/* (limpieza) Comentarios vacíos eliminados */
+
+/* Acción tipo enlace (uso general) */
+.action-link {
+  color: var(--fg);
+  transition: color 120ms ease-out;
+}
+.action-link:hover {
+  color: var(--accent, #55b2ff);
+}
+
+.right-panel {
+  width: 100%; /* ocupar todo el ancho del track derecho */
+  min-height: 100%;
+  box-sizing: border-box;
+}
+.dashboard-header {
+  height: 22px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.right-panel-footer {
+  height: 36px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+}

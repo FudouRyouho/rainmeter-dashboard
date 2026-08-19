@@ -1,0 +1,2015 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Panel Combinado</title>
+    <link rel="stylesheet" href="../@Resources/web/style.css" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <div class="dashboard-left">
+        <section class="dashboard-header" style="display: flex; align-items: center; padding-left: 1rem; font-weight: 500; font-size: 10px; color: var(--muted); opacity: 0.6;">v0.0.2</section>
+        <div class="tile tile-cpu" id="cpu" data-group="cpu">
+          <div class="tile-left">
+            <div class="tile-title">Ryzen 4700s</div>
+            <div class="tile-graph" aria-hidden="true">
+              <svg viewBox="0 0 100 56" width="100" height="56">
+                <rect x="0" y="0" width="100" height="56" class="frame" />
+
+                <path d="M0,56 L100,56" data-series="cpu-usage" />
+
+                <path d="M0,56 L100,56" data-series="cpu-clock" />
+
+                <path d="M0,56 L100,56" data-series="cpu-temp" />
+              </svg>
+            </div>
+          </div>
+          <div class="stack-v-2">
+            <div
+              class="grid auto-rows-min gap-2 col-gap-4 align-baseline text-compact grid-cols-3"
+            >
+              <div class="legend" data-series="cpu-usage">Usage</div>
+              <div class="legend" data-series="cpu-clock">Clock</div>
+              <div class="legend" data-series="cpu-temp">Temp</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-3 text-base tabular-nums"
+              data-field="cpu-summary"
+            >
+              <span data-field="cpu-usage">-- %</span>
+              <span data-field="cpu-clock">-,-- GHz</span>
+              <span data-field="cpu-temp">-- °C</span>
+            </div>
+            <div class="tile-text">
+              <div class="tile-sub" data-field="cpu-process">Process: 235</div>
+              <div class="tile-sub" data-field="cpu-subprocess">
+                SubProcess: 5358
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile tile-mem" id="ram" data-group="mem">
+          <div class="tile-left">
+            <div class="tile-title">Memoria</div>
+            <div class="tile-graph" aria-hidden="true">
+              <svg viewBox="0 0 100 56" width="100" height="56">
+                <rect x="0" y="0" width="100" height="56" class="frame" />
+                <path d="M0,56 L100,56" data-series="mem-phys" />
+                <path d="M0,56 L100,56" data-series="mem-virt" />
+                <path d="M0,56 L100,56" data-series="mem-cache" />
+              </svg>
+            </div>
+          </div>
+          <div class="tile-text">
+            <div class="tile-sub nowrap">
+              <span class="legend" data-series="mem-phys">RAM:</span>
+              <span data-field="mem-phys">--,- GB/--,- GB (--%)</span>
+            </div>
+            <div class="tile-sub nowrap">
+              <span class="legend" data-series="mem-virt">VIRT:</span>
+              <span data-field="mem-virt">--,- GB/--,- GB (--%)</span>
+            </div>
+            <div class="tile-sub nowrap">
+              <span class="legend" data-series="mem-cache">CACHE:</span>
+              <span data-field="mem-cache">--,- MB</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile tile-gpu" id="gpu" data-group="gpu">
+          <div class="tile-left">
+            <div class="tile-title">GTX 1660S</div>
+            <div class="tile-graph" aria-hidden="true">
+              <svg viewBox="0 0 100 56" width="100" height="56">
+                <rect x="0" y="0" width="100" height="56" class="frame" />
+                <path d="M0,56 L100,56" data-series="gpu-usage" />
+                <path d="M0,56 L100,56" data-series="gpu-clock" />
+                <path d="M0,56 L100,56" data-series="gpu-temp" />
+                <path d="M0,56 L100,56" data-series="gpu-vram" />
+                <path d="M0,56 L100,56" data-series="gpu-vram-shared" />
+              </svg>
+            </div>
+          </div>
+          <div class="tile-text stack-v-2">
+            <div
+              class="grid auto-rows-min gap-2 col-gap-4 align-baseline text-compact grid-cols-3"
+            >
+              <div class="legend" data-series="gpu-usage">Usage</div>
+              <div class="legend" data-series="gpu-clock">Clock</div>
+              <div class="legend" data-series="gpu-temp">Temp</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-3 text-base tabular-nums"
+              data-field="gpu-summary"
+            >
+              <span data-field="gpu-usage">-- %</span>
+              <span data-field="gpu-clock">-,-- MHz</span>
+              <span data-field="gpu-temp">-- °C</span>
+            </div>
+            <div class="tile-sub">
+              <span class="legend" data-series="gpu-vram">VRAM:</span>
+              <span data-field="gpu-vramDedicated">--,- GB/--,- GB (--%)</span>
+            </div>
+            <div class="tile-sub">
+              <span class="legend" data-series="gpu-vram-shared">SRAM:</span>
+              <span data-field="gpu-vramTotal">--,- GB/--,- GB (--%)</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="tile tile-disk disk0"
+          id="disk0"
+          data-disk="0"
+          data-group="disk"
+          data-device-index="0"
+        >
+          <div class="tile-left">
+            <div class="tile-title">Disco 0 (C:)</div>
+            <div class="tile-graph" aria-hidden="true">
+              <svg viewBox="0 0 100 56" width="100" height="56">
+                <rect x="0" y="0" width="100" height="56" class="frame" />
+                <path d="M0,56 L100,56" data-series="disk-usage" />
+                <path d="M0,56 L100,56" data-series="disk-latency" />
+                <path d="M0,56 L100,56" data-series="disk-read" />
+                <path d="M0,56 L100,56" data-series="disk-write" />
+              </svg>
+            </div>
+          </div>
+          <div class="tile-text stack-v-2">
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="disk-usage">Usage</div>
+              <div class="legend" data-series="disk-latency">Latency</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+              data-disk-sumary
+            >
+              <span data-field="disk-usagePct">--%</span>
+              <span data-field="disk-latency">--,- ms</span>
+            </div>
+            <div class="tile-sub">
+              <span class="legend" data-series="disk-read">R:</span>
+              <span data-field="disk-read">--,- KB/s</span>
+            </div>
+            <div class="tile-sub">
+              <span class="legend" data-series="disk-write">W:</span>
+              <span data-field="disk-write">--,- KB/s</span>
+            </div>
+            <div class="tile-sub nowrap" data-disk-sumary>
+              (<span data-field="disk-usedGB">—</span>/<span
+                data-field="disk-totalGB"
+                >—</span
+              >
+              GB) uso: <span data-field="disk-usedPct">—%</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="tile tile-disk disk1"
+          id="disk1"
+          data-disk="1"
+          data-group="disk"
+          data-device-index="1"
+        >
+          <div class="tile-left">
+            <div class="tile-title">Disco 1 (D:)</div>
+            <div class="tile-graph" aria-hidden="true">
+              <svg viewBox="0 0 100 56" width="100" height="56">
+                <rect x="0" y="0" width="100" height="56" class="frame" />
+                <path d="M0,56 L100,56" data-series="disk-usage" />
+                <path d="M0,56 L100,56" data-series="disk-latency" />
+                <path d="M0,56 L100,56" data-series="disk-read" />
+                <path d="M0,56 L100,56" data-series="disk-write" />
+              </svg>
+            </div>
+          </div>
+          <div class="tile-text stack-v-2">
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="disk-usage">Usage</div>
+              <div class="legend" data-series="disk-latency">Latency</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+              data-disk-sumary
+            >
+              <span data-field="disk-usagePct">--%</span>
+              <span data-field="disk-latency">--,- ms</span>
+            </div>
+            <div class="tile-sub">
+              <span class="legend" data-series="disk-read">R:</span>
+              <span data-field="disk-read">--,- KB/s</span>
+            </div>
+            <div class="tile-sub">
+              <span class="legend" data-series="disk-write">W:</span>
+              <span data-field="disk-write">--,- KB/s</span>
+            </div>
+            <div class="tile-sub nowrap" data-disk-sumary>
+              (<span data-field="disk-usedGB">—</span>/<span
+                data-field="disk-totalGB"
+                >—</span
+              >
+              GB) uso: <span data-field="disk-usedPct">—%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile tile-net" id="drivers" data-group="net">
+          <div class="tile-left">
+            <div class="tile-title">Ethernet</div>
+            <div class="tile-graph" aria-hidden="true">
+              <svg viewBox="0 0 100 56" width="100" height="56">
+                <rect x="0" y="0" width="100" height="56" class="frame" />
+                <path d="M0,56 L100,56" data-series="net-up" />
+                <path d="M0,56 L100,56" data-series="net-down" />
+                <path d="M0,56 L100,56" data-series="net-ping" />
+              </svg>
+            </div>
+          </div>
+          <div class="tile-text stack-v-2">
+            <div
+              class="grid auto-rows-min gap-2 col-gap-4 align-baseline text-compact grid-cols-3"
+            >
+              <span class="legend" data-series="net-up">E:</span>
+              <span class="legend" data-series="net-down">R:</span>
+              <span class="legend" data-series="net-ping">Ping:</span>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-3 text-base tabular-nums"
+            >
+              <span data-field="net-up">-- Kbps</span>
+              <span data-field="net-down">-- Kbps</span>
+              <div class="tile-sub nowrap" data-field="net-ping">--,- ms</div>
+            </div>
+            <div class="tile-sub nowrap" data-field="net-ipPublic">
+              Public: ---.---.-.---
+            </div>
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <span class="legend" data-series="net-up">Tot E:</span>
+              <span class="legend" data-series="net-down">Tot R:</span>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+            >
+              <span data-field="net-totalUp">--,- GB</span>
+              <span data-field="net-totalDown">--,- GB</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile tile-top-all" id="top-all">
+          <div class="top-grid">
+            <section class="top-section tile-top-cpu">
+              <div class="tile-title">Top CPU</div>
+              <div class="top-list">
+                <div class="top-row">
+                  <span class="top-name" data-field="top-cpu-1-name"
+                    >Proceso 1</span
+                  ><span class="top-metric" data-field="top-cpu-1-value"
+                    >—%</span
+                  >
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-cpu-2-name"
+                    >Proceso 2</span
+                  ><span class="top-metric" data-field="top-cpu-2-value"
+                    >—%</span
+                  >
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-cpu-3-name"
+                    >Proceso 3</span
+                  ><span class="top-metric" data-field="top-cpu-3-value"
+                    >—%</span
+                  >
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-cpu-4-name"
+                    >Proceso 4</span
+                  ><span class="top-metric" data-field="top-cpu-4-value"
+                    >—%</span
+                  >
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-cpu-5-name"
+                    >Proceso 5</span
+                  ><span class="top-metric" data-field="top-cpu-5-value"
+                    >—%</span
+                  >
+                </div>
+              </div>
+            </section>
+
+            <section class="top-section tile-top-ram">
+              <div class="tile-title">Top RAM</div>
+              <div class="top-list">
+                <div class="top-row">
+                  <span class="top-name" data-field="top-ram-1-name"
+                    >Proceso 1</span
+                  ><span class="top-metric" data-field="top-ram-1-value"
+                    >—</span
+                  >
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-ram-2-name"
+                    >Proceso 2</span
+                  ><span class="top-metric" data-field="top-ram-2-value"
+                    >—</span
+                  >
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-ram-3-name"
+                    >Proceso 3</span
+                  ><span class="top-metric" data-field="top-ram-3-value"
+                    >—</span
+                  >
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-ram-4-name"
+                    >Proceso 4</span
+                  ><span class="top-metric" data-field="top-ram-4-value"
+                    >—</span
+                  >
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-ram-5-name"
+                    >Proceso 5</span
+                  ><span class="top-metric" data-field="top-ram-5-value"
+                    >—</span
+                  >
+                </div>
+              </div>
+            </section>
+
+            <section class="top-section tile-top-disk">
+              <div class="tile-title">Top IO</div>
+              <div class="top-list">
+                <div class="top-row">
+                  <span class="top-name" data-field="top-io-1-name"
+                    >Proceso 1</span
+                  ><span class="top-metric" data-field="top-io-1-value">—</span>
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-io-2-name"
+                    >Proceso 2</span
+                  ><span class="top-metric" data-field="top-io-2-value">—</span>
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-io-3-name"
+                    >Proceso 3</span
+                  ><span class="top-metric" data-field="top-io-3-value">—</span>
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-io-4-name"
+                    >Proceso 4</span
+                  ><span class="top-metric" data-field="top-io-4-value">—</span>
+                </div>
+                <div class="top-row">
+                  <span class="top-name" data-field="top-io-5-name"
+                    >Proceso 5</span
+                  ><span class="top-metric" data-field="top-io-5-value">—</span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="top-graphs">
+          <div class="tile-cpu">
+            <div class="tile-graph w92" aria-hidden="true">
+              <svg viewBox="0 0 100 60">
+                <rect x="0" y="0" width="100" height="60" class="frame" />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-1"
+                  data-series="top-cpu-1"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-2"
+                  data-series="top-cpu-2"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-3"
+                  data-series="top-cpu-3"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-4"
+                  data-series="top-cpu-4"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-5"
+                  data-series="top-cpu-5"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <div class="tile-mem">
+            <div class="tile-graph w92" aria-hidden="true">
+              <svg viewBox="0 0 100 60">
+                <rect x="0" y="0" width="100" height="60" class="frame" />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-1"
+                  data-series="top-ram-1"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-2"
+                  data-series="top-ram-2"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-3"
+                  data-series="top-ram-3"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-4"
+                  data-series="top-ram-4"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-5"
+                  data-series="top-ram-5"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <div class="tile-disk">
+            <div class="tile-graph w92" aria-hidden="true">
+              <svg viewBox="0 0 100 60">
+                <rect x="0" y="0" width="100" height="60" class="frame" />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-1"
+                  data-series="top-io-1"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-2"
+                  data-series="top-io-2"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-3"
+                  data-series="top-io-3"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-4"
+                  data-series="top-io-4"
+                />
+                <path
+                  d="M0,60 L100,60"
+                  class="series-top-5"
+                  data-series="top-io-5"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-body">
+        <div class="right-panel" data-panel="cpu" data-group="cpu" style="display: none">
+          <section class="dashboard-header"></section>
+
+          <section
+            id="cpu-lp-grid"
+            class="grid grid-cols-2 auto-rows-min gap-2"
+            data-group="cpu"
+            data-role="lp-grid"
+          >
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="1"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T0
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="2"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T1
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="3"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T2
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="4"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T3
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="5"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T4
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="6"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T5
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="7"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T6
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="8"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T7
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="9"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T8
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="10"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T9
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="11"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T10
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="12"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T11
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="13"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T12
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="14"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T13
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="15"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T14
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div
+              class="tile-graph w-full"
+              aria-hidden="true"
+              style="height: var(--lp-h); position: relative"
+            >
+              <svg viewBox="0 0 176 60" class="w-full h-full">
+                <rect x="0" y="0" width="176" height="60" class="frame" />
+                <path
+                  d="M0,60 L176,60"
+                  data-series="cpu-usage"
+                  data-lp-index="16"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="148"
+                    y="3"
+                    width="26"
+                    height="10"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="172"
+                    y="11"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    T15
+                  </text>
+                </g>
+              </svg>
+            </div>
+          </section>
+
+          <section
+            id="cpu-info"
+            style="padding: 6px 2px 0"
+            class="grid grid-cols-2 gap-2 w-full"
+          >
+            <div class="w-full">
+              <div style="font-size: 10px; opacity: 0.8">Tiempo activo</div>
+              <div data-field="sys-uptime" style="font-size: 12px">
+                00:00:00
+              </div>
+            </div>
+            <div class="w-full">
+              <div style="font-size: 10px; opacity: 0.8">
+                Voltaje CPU (VCore)
+              </div>
+              <div data-field="cpu-vcoreV" style="font-size: 12px">-,-- V</div>
+            </div>
+            <div class="w-full">
+              <div style="font-size: 10px; opacity: 0.8">RPM CPU FAN</div>
+              <div data-field="cpu-coolerRPM" style="font-size: 12px">
+                ---- RPM
+              </div>
+            </div>
+            <div class="w-full">
+              <div style="font-size: 10px; opacity: 0.8">—</div>
+              <div style="font-size: 12px">&nbsp;</div>
+            </div>
+          </section>
+        </div>
+
+        <div class="right-panel" data-panel="mem" data-group="mem" style="display: none">
+          <section class="dashboard-header"></section>
+          <section id="ram-right" class="grid auto-rows-fr gap-2">
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 352 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="352" height="110" class="frame" />
+                <path
+                  d="M0,110 L352,110"
+                  data-series="mem-phys"
+                  data-ram-right="phys"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="318"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="348"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    RAM
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 352 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="352" height="110" class="frame" />
+                <path
+                  d="M0,110 L352,110"
+                  data-series="mem-virt"
+                  data-ram-right="virt"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="318"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="348"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    VIRT
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 352 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="352" height="110" class="frame" />
+                <path
+                  d="M0,110 L352,110"
+                  data-series="mem-swap"
+                  data-ram-right="swap"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="318"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="348"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    SWAP
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 352 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="352" height="110" class="frame" />
+                <path
+                  d="M0,110 L352,110"
+                  data-series="mem-cache"
+                  data-ram-right="cache"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="318"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="348"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    CACHE
+                  </text>
+                </g>
+              </svg>
+            </div>
+          </section>
+
+          <section id="ram-summary" class="stack-v-2 panel-summary">
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="mem-phys">RAM</div>
+              <div class="legend" data-series="mem-virt">VIRT</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+              data-field="mem-summary-row1"
+            >
+              <span data-field="mem-right-phys">—</span>
+              <span data-field="mem-right-virt">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="mem-swap">SWAP</div>
+              <div class="legend" data-series="mem-cache">CACHE</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+              data-field="mem-summary-row2"
+            >
+              <span data-field="mem-right-swap">—</span>
+              <span data-field="mem-right-cache">—</span>
+            </div>
+          </section>
+
+          <section id="ram-actions">
+            <div id="mem-clean-btn" class="tile-sub action-link">Clear</div>
+          </section>
+        </div>
+
+        <div class="right-panel" data-panel="gpu" data-group="gpu" style="display: none">
+          <section class="dashboard-header"></section>
+          <section id="gpu-right" class="grid grid-cols-2 auto-rows-fr gap-2">
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-series="gpu-usage"
+                  data-gpu-right="usage"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="144"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="174"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    USAGE
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-series="gpu-temp"
+                  data-gpu-right="temp"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="144"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="174"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    TEMP
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-series="gpu-clock"
+                  data-gpu-right="clock"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="144"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="174"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    CLOCK
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-series="gpu-vcore"
+                  data-gpu-right="vcore"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="144"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="174"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    VCORE
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-series="gpu-vram"
+                  data-gpu-right="vram"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="144"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="174"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    VRAM
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-series="gpu-vram-shared"
+                  data-gpu-right="sram"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="144"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="174"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    SRAM
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-series="gpu-fan-rpm"
+                  data-gpu-right="fanRPM"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="144"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="174"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    GPU FAN
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-series="gpu-vram-clock"
+                  data-gpu-right="vramClockMHz"
+                />
+                <g class="tile-label">
+                  <rect
+                    x="144"
+                    y="4"
+                    width="32"
+                    height="12"
+                    fill="#000"
+                    opacity="0.25"
+                    rx="2"
+                    ry="2"
+                  />
+                  <text
+                    x="174"
+                    y="12"
+                    text-anchor="end"
+                    font-size="8"
+                    fill="#cfd8dc"
+                  >
+                    VRAM CLOCK
+                  </text>
+                </g>
+              </svg>
+            </div>
+          </section>
+
+          <section id="gpu-summary" class="stack-v-2 panel-summary">
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="gpu-usage">USAGE</div>
+              <div class="legend" data-series="gpu-temp">TEMP</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+              data-field="gpu-summary-row1"
+            >
+              <span data-field="gpu-right-usage">—</span>
+              <span data-field="gpu-right-temp">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="gpu-clock">CLOCK</div>
+              <div class="legend" data-series="gpu-vcore">VCORE</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+              data-field="gpu-summary-row2"
+            >
+              <span data-field="gpu-right-clock">— MHz</span>
+              <span data-field="gpu-right-vcoreV">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="gpu-vram">VRAM</div>
+              <div class="legend" data-series="gpu-vram-shared">SRAM</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+              data-field="gpu-summary-row3"
+            >
+              <span data-field="gpu-right-vramDedicated">—</span>
+              <span data-field="gpu-right-vramTotal">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="gpu-fan-rpm">GPU FAN</div>
+              <div class="legend" data-series="gpu-vram-clock">VRAM CLOCK</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+              data-field="gpu-summary-row4"
+            >
+              <span data-field="gpu-right-fanRPM">—</span>
+              <span data-field="gpu-right-vramClockMHz">—</span>
+            </div>
+          </section>
+        </div>
+
+        <div class="right-panel" data-panel="disk" data-group="disk" style="display: none">
+          <section class="dashboard-header"></section>
+          <section id="disk-right" class="grid grid-cols-2 auto-rows-fr gap-2">
+            <div class="panel-graph disk0 w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-disk-right="disk-0-usage"
+                  data-series="disk-usage"
+                />
+              </svg>
+            </div>
+            <div class="panel-graph disk1 w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-disk-right="disk-1-usage"
+                  data-series="disk-usage"
+                />
+              </svg>
+            </div>
+
+            <div class="panel-graph disk0 w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-disk-right="disk-0-latency"
+                  data-series="disk-latency"
+                />
+              </svg>
+            </div>
+            <div class="panel-graph disk1 w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-disk-right="disk-1-latency"
+                  data-series="disk-latency"
+                />
+              </svg>
+            </div>
+
+            <div class="panel-graph disk0 w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-disk-right="disk-0-read"
+                  data-series="disk-read"
+                />
+              </svg>
+            </div>
+            <div class="panel-graph disk1 w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-disk-right="disk-1-read"
+                  data-series="disk-read"
+                />
+              </svg>
+            </div>
+
+            <div class="panel-graph disk0 w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-disk-right="disk-0-write"
+                  data-series="disk-write"
+                />
+              </svg>
+            </div>
+            <div class="panel-graph disk1 w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-disk-right="disk-1-write"
+                  data-series="disk-write"
+                />
+              </svg>
+            </div>
+          </section>
+
+          <section id="disk-summary" class="stack-v-2 panel-summary">
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend disk0" data-series="disk-usage">USAGE</div>
+              <div class="legend disk1" data-series="disk-usage">USAGE</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+            >
+              <span class="disk0" data-field="disk-0-right-usage">—</span>
+              <span class="disk1" data-field="disk-1-right-usage">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend disk0" data-series="disk-latency">LATENCY</div>
+              <div class="legend disk1" data-series="disk-latency">LATENCY</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+            >
+              <span class="disk0" data-field="disk-0-right-latency">—</span>
+              <span class="disk1" data-field="disk-1-right-latency">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend disk0" data-series="disk-read">READ</div>
+              <div class="legend disk1" data-series="disk-read">READ</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+            >
+              <span class="disk0" data-field="disk-0-right-read">—</span>
+              <span class="disk1" data-field="disk-1-right-read">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend disk0" data-series="disk-write">WRITE</div>
+              <div class="legend disk1" data-series="disk-write">WRITE</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+            >
+              <span class="disk0" data-field="disk-0-right-write">—</span>
+              <span class="disk1" data-field="disk-1-right-write">—</span>
+            </div>
+          </section>
+          <section class="right-panel-footer">
+            <button style="padding: 4px">Crystal disk</button>
+          </section>
+        </div>
+
+        <div class="right-panel" data-panel="net" data-group="net" style="display: none">
+          <section class="dashboard-header"></section>
+          <section
+            id="net-right"
+            class="grid grid-cols-2 auto-rows-fr gap-2"
+          >
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-net-right="net-up"
+                  data-series="net-up"
+                />
+              </svg>
+            </div>
+            <div class="panel-graph w-full h-full" aria-hidden="true">
+              <svg
+                viewBox="0 0 178 110"
+                data-grid="h"
+                data-grid-lines="4"
+                class="w-full h-full"
+              >
+                <rect x="0" y="0" width="178" height="110" class="frame" />
+                <path
+                  d="M0,110 L178,110"
+                  data-net-right="net-down"
+                  data-series="net-down"
+                />
+              </svg>
+            </div>
+          </section>
+
+          <section id="net-summary" class="stack-v-2 panel-summary">
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="net-up">UP</div>
+              <div class="legend" data-series="net-down">DOWN</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+            >
+              <span data-field="net-right-up">—</span>
+              <span data-field="net-right-down">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="net-ping">PING</div>
+              <div class="legend">PUBLIC IP</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+            >
+              <span data-field="net-right-ping">—</span>
+              <span data-field="net-right-ipPublic">—</span>
+            </div>
+
+            <div class="grid auto-rows-min gap-2 align-baseline grid-cols-2">
+              <div class="legend" data-series="net-up">TOTAL UP</div>
+              <div class="legend" data-series="net-down">TOTAL DOWN</div>
+            </div>
+            <div
+              class="grid auto-rows-min gap-2 grid-cols-2 text-base tabular-nums"
+            >
+              <span data-field="net-right-totalUp">—</span>
+              <span data-field="net-right-totalDown">—</span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="../@Resources/web/alert-config.js"></script>
+    <script src="../@Resources/web/alert-helper.js"></script>
+    <script src="../@Resources/web/alert-text.js"></script>
+    <script src="../@Resources/web/debug-logger.js"></script>
+    <script src="../@Resources/web/rainmeter-utils.js"></script>
+    <script src="../@Resources/web/right-refs.js"></script>
+    <script src="../@Resources/web/scale-utils.js"></script>
+    <script src="../@Resources/web/graph-helper.js"></script>
+    <script src="../@Resources/web/hover-helper.js"></script>
+    <script src="../@Resources/web/heartbeat.js"></script>
+    <script src="../@Resources/web/panel-bundle.js"></script>
+    <script src="../@Resources/web/bootstrap-hb.js"></script>
+    <script src="../@Resources/web/bundle/cpu.bundle.js"></script>
+    <script src="../@Resources/web/bundle/mem.bundle.js"></script>
+    <script src="../@Resources/web/bundle/gpu.bundle.js"></script>
+    <script src="../@Resources/web/bundle/disk.bundle.js"></script>
+    <script src="../@Resources/web/bundle/net.bundle.js"></script>
+    <script src="../@Resources/web/bundle/top.bundle.js"></script>
+
+
+
+
+    <script>
+      // Activar el logger automáticamente en arranque (primeras 8 entradas por recurso)
+      try {
+        if (window.DebugLogger) window.DebugLogger.enable(true, 8);
+      } catch {}
+    </script>
+
+    <script>
+      // Router de paneles: mostrar/ocultar contenedores de la columna derecha
+      (function () {
+        var LS_KEY = "combinado.panel.selected";
+        function showPanel(id) {
+          var panels = document.querySelectorAll(
+            ".dashboard-body .right-panel",
+          );
+          panels.forEach(function (p) {
+            p.style.display = "none";
+          });
+          var sel = '.dashboard-body .right-panel[data-panel="' + id + '"]';
+          var panel = document.querySelector(sel);
+          if (panel) panel.style.display = "block";
+          setActiveTitlesByPanel(id);
+          try {
+            localStorage.setItem(LS_KEY, id);
+          } catch (e) {}
+        }
+
+        function setActiveTitlesByPanel(panelId) {
+          var titles = document.querySelectorAll(".dashboard-left .tile-title");
+          titles.forEach(function (t) {
+            t.classList.remove("active");
+          });
+          var map = {
+            cpu: ["cpu"],
+            mem: ["ram"],
+            gpu: ["gpu"],
+            disk: ["disk0", "disk1"],
+            net: ["drivers"],
+          };
+          var ids = map[panelId] || [];
+          ids.forEach(function (id) {
+            var el = document.querySelector("#" + id + " .tile-title");
+            if (el) el.classList.add("active");
+          });
+        }
+
+        function bind(tileId, panelId) {
+          var el = document.querySelector("#" + tileId + " .tile-title");
+          if (!el) return;
+          el.classList.add("clickable");
+          el.addEventListener("click", function () {
+            showPanel(panelId);
+          });
+        }
+
+        // Bind por tile -> panel
+        bind("cpu", "cpu");
+        bind("ram", "mem");
+        bind("gpu", "gpu");
+        bind("disk0", "disk");
+        bind("disk1", "disk");
+        bind("drivers", "net");
+
+        // Panel por defecto con persistencia
+        (function () {
+          var defaultId = "cpu";
+          var saved = null;
+          try {
+            saved = localStorage.getItem(LS_KEY);
+          } catch (e) {
+            saved = null;
+          }
+          var valid = ["cpu", "mem", "gpu", "disk", "net"];
+          var initial = saved && valid.indexOf(saved) >= 0 ? saved : defaultId;
+          showPanel(initial);
+        })();
+      })();
+
+      // Rejilla horizontal componetizada: por atributo o aplicada globalmente
+      (function () {
+        function applyGrid(svg) {
+          var explicit = svg.getAttribute("data-grid");
+          var nAttr = Number(svg.getAttribute("data-grid-lines"));
+          var n;
+          if (explicit === "h" && !isNaN(nAttr)) n = nAttr;
+          else {
+            // Auto: calcular según altura lógica del SVG
+            var size = GraphHelper.getSVGSize(svg);
+            n = size.height <= 90 ? 3 : 4; // compacto 60/72 → 3, panel grande 110/120 → 4
+          }
+          GraphHelper.addGrid(svg, { lines: n });
+        }
+        // 1) SVGs con data-grid explícito
+        var svgsExplicit = document.querySelectorAll('svg[data-grid="h"]');
+        svgsExplicit.forEach(applyGrid);
+        // 2) Aplicación global a todas las gráficas existentes
+        var allGraphs = document.querySelectorAll(
+          ".tile-graph svg, .panel-graph svg",
+        );
+        allGraphs.forEach(function (svg) {
+          // Evitar doble trabajo si ya fue procesado por explícito
+          if (!svg.hasAttribute("data-grid")) applyGrid(svg);
+        });
+      })();
+
+      // Acción: ejecutar limpieza de memoria vía cmd (señal a RunCommand)
+      (function () {
+        var btn = document.getElementById("mem-clean-btn");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+          try {
+            // Requiere medida RunMemClean en COMBINADO.ini (ver docs)
+            RainmeterUtils.whenReady(function (api) {
+              if (api && typeof api.Bang === "function") {
+                api.Bang('!CommandMeasure RunMemClean "Run"');
+              }
+            }, 200);
+          } catch (e) {}
+        });
+      })();
+    </script>
+  </body>
+</html>
+
