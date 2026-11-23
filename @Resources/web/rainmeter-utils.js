@@ -32,6 +32,7 @@
     
     // Auditoría v0.0.2: Retornar un objeto mock mínimo para prevenir crashes
     return {
+      __isFallback: true,
       GetMeasure: function() { return { GetValue: function(){return 0;}, GetString: function(){return "";}, Update: function(){} }; },
       Execute: function(b) { console.log("[RM Fallback] Execute:", b); }
     };
@@ -94,10 +95,13 @@
       }
     },
 
+    _retries: 0,
+
     whenReady: function (cb) {
       var self = this;
       var api = findNativeAPI();
-      if (!api) {
+      if ((!api || api.__isFallback) && this._retries < 10) {
+        this._retries++;
         setTimeout(function () { self.whenReady(cb); }, 200);
         return;
       }
@@ -105,7 +109,11 @@
       setTimeout(function () { 
         if (!window.__RM_DIAGNOSED) {
           window.__RM_DIAGNOSED = true;
-          console.info('%c[RainmeterAPI] Conectado exitosamente.', 'color: #4caf50; font-weight: bold;');
+          if (api.__isFallback) {
+            console.warn('%c[RainmeterAPI] No disponible: usando fallback, todas las medidas devolverán 0.', 'color: #ff9800; font-weight: bold;');
+          } else {
+            console.info('%c[RainmeterAPI] Conectado exitosamente.', 'color: #4caf50; font-weight: bold;');
+          }
         }
         cb(api); 
       }, 300);
@@ -114,7 +122,12 @@
 
   // --- Capa de UI (Helpers) ---
 
+  function mocksActive() {
+    try { return typeof window !== 'undefined' && window.mocks_disabled === false; } catch (e) { return false; }
+  }
+
   function setField(key, value, root) {
+    if (mocksActive()) return;
     var ctx = root || document;
     var el = ctx.querySelector('[data-field="' + key + '"]');
     if (!el) {
@@ -133,6 +146,7 @@
   }
 
   function setState(key, value, cfgKey, root) {
+    if (mocksActive()) return;
     var ctx = root || document;
     var el = ctx.querySelector('[data-field="' + key + '"]');
     if (!el) {
@@ -155,6 +169,7 @@
   }
 
   function setPathD(el, d) {
+    if (mocksActive()) return;
     if (el) el.setAttribute('d', d);
   }
 
